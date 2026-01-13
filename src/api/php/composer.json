@@ -1,6 +1,5 @@
 {
     "require": {
-        "hybridauth/hybridauth": "^3.9",
-        "doctrine/orm": "^3.2"
+        "hybridauth/hybridauth": "^3.9"
     }
 }

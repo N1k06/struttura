@@ -64,7 +64,7 @@ Le tecnologie sono state scelte per favorire la semplicità, la leggerezza e il 
     ```
 4.  L'ambiente sarà pronto ai seguenti indirizzi:
     *   **Frontend:** `http://localhost:4000`
-    *   **Backend API:** Accessibile tramite il frontend all'endpoint `/api/`
+    *   **Backend API:** Accessibile tramite il frontend all'endpoint `/api/` o tramite `http://localhost:3000/api/`
     *   **phpMyAdmin:** `http://localhost:8080` (per la gestione del database)
 
 Ora sei nella Struttura.

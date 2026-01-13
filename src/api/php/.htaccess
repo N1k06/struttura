@@ -1,17 +1,12 @@
-RewriteEngine On
-RewriteBase /
+<IfModule mod_rewrite.c>
+  RewriteEngine On
 
-# 1. BLOCCO ACCESSO DIRETTO AL ROUTER
-# Se l'utente sta cercando di chiamare proprio "router.php" nel browser, lo blocchiamo.
-# Usiamo THE_REQUEST perché non cambia durante i reindirizzamenti interni.
-RewriteCond %{THE_REQUEST} \ /router\.php [NC]
-RewriteRule ^ - [F]
+  # Se la richiesta è per un file che esiste fisicamente, servilo direttamente.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  
+  # Se la richiesta è per una directory che esiste fisicamente, servila direttamente.
+  RewriteCond %{REQUEST_FILENAME} !-d
 
-# 2. REINDIRIZZAMENTO API
-# Se la richiesta inizia con /api/, la mandiamo internamente al router.
-RewriteRule ^api($|/.*) router.php [L,QSA]
-
-# 3. BLOCCO CATCH-ALL (Tutto il resto)
-# Blocchiamo qualsiasi altra richiesta, ECCETTO quelle che sono già state 
-# riscritte verso router.php (permettendo così al processo interno di finire).
-RewriteRule !^router\.php$ - [F]
+  # Per tutte le altre richieste, passa il controllo a core/index.php.
+  RewriteRule . core/index.php [L]
+</IfModule>
