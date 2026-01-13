@@ -1,4 +1,4 @@
-./config/mariadb_data
-./config/mariadb_run
-./src/api/php/vendor
-./src/api/php/composer.lock
+config/mariadb_data
+config/mariadb_run
+src/api/php/vendor
+src/api/php/composer.lock
