@@ -5,9 +5,11 @@
 $routes = [
     // Rotte che rispondono al metodo GET
     'GET' => [
+        // Rotta custom che usa un suo handler specifico
         '/api/prova' => 'mostra_messaggio_di_prova',
-        '/api/users' => 'get_users',
-        '/api/products' => 'get_products'
+        // Rotte che usano il gestore generico per tabelle
+        '/api/users' => 'generic_table_handler',
+        '/api/products' => 'generic_table_handler'
     ],
 
     // Rotte che rispondono al metodo POST
