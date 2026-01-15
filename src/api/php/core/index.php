@@ -31,8 +31,5 @@ $method = $_SERVER['REQUEST_METHOD'];
 // L'URI della richiesta, senza eventuali parametri GET (es. /api/utenti da /api/utenti?id=1)
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 
-
-// 3. Avvia lo smistatore
-
 // Chiama la funzione route(), passandole la mappa, il metodo, l'URI e ora anche il DB
 route($routes, $method, $uri, $db);

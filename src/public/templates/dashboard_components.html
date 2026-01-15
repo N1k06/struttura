@@ -1,0 +1,33 @@
+<!-- 
+  This file contains reusable HTML components for the dashboard.
+  The JavaScript will load this file and use the <template> tags to build the UI.
+-->
+
+<!-- Template for a single table header. Used for the welcome message or when there's no data. -->
+<template id="tableHeader">
+    <tr>
+        <th scope="col" class="px-6 py-3"></th>
+    </tr>
+</template>
+
+<!-- Template for a single header cell in the main data table. -->
+<template id="tableHeaderCell">
+    <th scope="col" class="px-6 py-3"></th>
+</template>
+
+<!-- Template for a full row in the table body. -->
+<template id="tableBodyRow">
+    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"></tr>
+</template>
+
+<!-- Template for a single cell in a table body row. -->
+<template id="tableBodyCell">
+    <td class="px-6 py-4"></td>
+</template>
+
+<!-- Template for the message shown when no data is available or an error occurs. -->
+<template id="noDataRow">
+    <tr>
+        <td colspan="100%" class="px-6 py-4 text-center"></td>
+    </tr>
+</template>
