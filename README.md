@@ -2,7 +2,7 @@
 
 *"Tu volevi sapere che cos'è Matrix, vero? Trinity. Sta' tranquillo. Ti apparirà tutto assurdo. Questo è "struttura", il nostro programma di caricamento. Possiamo caricare di tutto: vestiti, equipaggiamento, armi, addestramento simulato, tutto quello di cui abbiamo bisogno." - Morpheus*
 
-**Struttura** è uno stack applicativo e un framework di sviluppo "opinionated" per la creazione di web app moderne. Nasce dalla filosofia che un'architettura pulita, con una netta separazione dei compiti, sia la base fondamentale per qualsiasi progetto robusto e manutenibile.
+**Struttura** è un micro-framework full-stack di sviluppo "opinionated" per la creazione di web app moderne. Nasce dalla filosofia che un'architettura pulita, con una netta separazione dei compiti, sia la base fondamentale per qualsiasi progetto robusto e manutenibile.
 
 Questo boilerplate fornisce un ambiente di sviluppo completo e "chiavi in mano" basato su Docker.
 

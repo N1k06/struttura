@@ -12,29 +12,56 @@
  * @param object $db L'istanza del nostro oggetto Database.
  */
 function route($routes, $method, $uri, $db) {
-    // Controlla se esiste una rotta per il metodo e l'URI richiesti
-    if (isset($routes[$method]) && isset($routes[$method][$uri])) {
-        
-        // Ottiene il nome della funzione handler da chiamare
-        $handler_function = $routes[$method][$uri];
-        
-        // Controlla se la funzione handler esiste veramente nel file handlers.php
-        if (function_exists($handler_function)) {
+    // 1. Pulizia: Rimuoviamo slash iniziali/finali per evitare errori vuoti
+    // Esempio: "/api/users/5/" diventa "api/users/5"
+    $uriClean = trim(parse_url($uri, PHP_URL_PATH), '/');
+    $uriParts = explode('/', $uriClean); // ['api', 'users', '5']
+
+    // Cerchiamo tra tutte le rotte del metodo corrente (es. GET o PUT)
+    if (isset($routes[$method])) {
+        foreach ($routes[$method] as $routePattern => $handler) {
             
-            // Imposta l'header per far capire al browser che stiamo inviando JSON
-            header('Content-Type: application/json');
-            
-            // Chiama la funzione handler, passandole l'oggetto DB
-            $handler_function($db);
-            
-        } else {
-            // Errore interno del server: la rotta è definita ma la funzione non esiste
-            http_response_code(500);
-            echo json_encode(['error' => "Errore del server: la funzione '$handler_function' non è stata trovata."]);
+            // Puliamo anche la rotta definita nel file
+            $routeClean = trim($routePattern, '/');
+            $routeParts = explode('/', $routeClean); // ['api', 'users', ':id']
+
+            // SE i pezzi sono di numero diverso, non è questa la rotta giusta
+            if (count($uriParts) !== count($routeParts)) {
+                continue;
+            }
+
+            $params = [];
+            $match = true;
+
+            // Confrontiamo pezzo per pezzo
+            for ($i = 0; $i < count($routeParts); $i++) {
+                $partRoute = $routeParts[$i];
+                $partUri = $uriParts[$i];
+
+                // CASO A: È un parametro dinamico (inizia con ':')
+                if (str_starts_with($partRoute, ':')) {
+                    $params[] = $partUri; // Salviamo il valore (es. "5")
+                }
+                // CASO B: È una parola statica (es. "api" o "users")
+                elseif ($partRoute !== $partUri) {
+                    $match = false; // Non corrispondono, rotta sbagliata
+                    break; 
+                }
+            }
+
+            // Se siamo arrivati qui e $match è ancora true, abbiamo trovato la rotta!
+            if ($match) {
+                if (function_exists($handler)) {
+                    header('Content-Type: application/json');
+                    // Passiamo DB + tutti i parametri trovati (es. l'ID)
+                    call_user_func_array($handler, array_merge([$db], $params));
+                    return;
+                }
+            }
         }
-    } else {
-        // Errore: la pagina richiesta non è stata trovata
-        http_response_code(404);
-        echo json_encode(['error' => 'Pagina non trovata.']);
     }
+
+    // Nessuna rotta trovata
+    http_response_code(404);
+    echo json_encode(['error' => 'Endpoint non trovato.']);
 }

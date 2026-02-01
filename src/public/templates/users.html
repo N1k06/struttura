@@ -1,0 +1,73 @@
+<div x-data="users">
+
+    <div class="uk-flex uk-flex-between uk-flex-middle">
+        <h2 class="uk-heading-divider uk-margin-remove-bottom">Gestione Dati</h2>
+        <button class="uk-button uk-button-primary" @click="createItem()">
+            <span uk-icon="plus" class="uk-margin-small-right"></span> Nuovo
+        </button>
+    </div>
+
+    <div x-show="isLoading" class="uk-text-center uk-margin">
+        <span uk-spinner></span>
+    </div>
+
+    <table class="uk-table uk-table-middle uk-table-divider uk-table-hover">
+        <thead>
+            <tr>
+                <template x-for="col in columns" :key="col.key">
+                    <th x-text="col.label" 
+                        :class="col.width || ''"></th> 
+                </template>
+                <th class="uk-table-expand">Azioni</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <template x-for="(item, index) in items" :key="item[pkName] || index">
+                
+                <tr @click="!isAdding && editingId !== item[pkName] ? startEdit(item) : null" 
+                    :class="editingId === item[pkName] ? 'uk-background-muted' : ''"
+                    style="cursor: pointer">
+                    
+                    <template x-for="col in columns" :key="col.key">
+                        <td class="uk-text-truncate"> <div x-show="editingId !== item[pkName]">
+                                <span x-text="item[col.key]"></span>
+                                <span x-text="col.suffix || ''" class="uk-text-muted uk-text-small"></span>
+                            </div>
+
+                            <div x-show="editingId === item[pkName]">
+                                <input class="uk-input uk-form-small uk-width-1-1" 
+                                       :type="col.type || 'text'" 
+                                       :step="col.step || null"
+                                       :placeholder="col.label"
+                                       x-model="currentItem[col.key]" 
+                                       @click.stop>
+                            </div>
+
+                        </td>
+                    </template>
+        
+                    <td class="uk-text-nowrap">
+                        <div x-show="editingId === item[pkName]" class="uk-flex uk-flex-middle">
+                            <button class="uk-button uk-button-primary uk-button-small uk-margin-small-right" 
+                                    style="width: 32px; padding: 0;" @click.stop="saveItem()">
+                                <span x-show="isLoading" uk-spinner="ratio: 0.5"></span>
+                                <span x-show="!isLoading" uk-icon="check" x-init="$nextTick(() => UIkit.icon($el))"></span>
+                            </button>
+                            <button class="uk-button uk-button-default uk-button-small" 
+                                    style="width: 32px; padding: 0;" @click.stop="cancelEdit()">
+                                <span uk-icon="close" x-init="$nextTick(() => UIkit.icon($el))"></span>
+                            </button>
+                        </div>
+                    </td>
+
+                </tr>
+            </template>
+        </tbody>
+    </table>
+
+    <div x-show="!isLoading && items.length === 0" class="uk-alert uk-alert-warning">
+        Nessun dato presente.
+    </div>
+
+</div>

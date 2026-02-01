@@ -1,81 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello UIkit!</title>
-    <!-- Includiamo il CSS di UIkit -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/css/uikit.min.css" />
+<html>
+    <head>
+        <title>Title</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <style>
-      /* Per assicurare che la griglia occupi l'intera altezza */
-      html, body, .uk-grid-match {
-        height: 100vh;
-      }
-    </style>
-</head>
-<body>
+        <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.25.5/dist/css/uikit.min.css" />
 
-    <!-- Navbar con pulsante "hamburger" visibile solo su schermi piccoli (sotto il breakpoint 'm') -->
-    <!-- CORREZIONE: Aggiunta la classe uk-padding-small per spaziare l'icona dal bordo -->
-    <nav class="uk-navbar-container uk-padding-small uk-hidden@m" uk-navbar>
-        <div class="uk-navbar-left">
-            <a class="uk-navbar-toggle" href="#" uk-toggle="target: #offcanvas-nav">
-                <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
-            </a>
-        </div>
-    </nav>
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.25.5/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.25.5/dist/js/uikit-icons.min.js"></script>
+    </head>
+    
+    <body>
+        <!-- Navbar for hamburger buttons, logos, links, etc. -->
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left uk-margin-left">
+                <a class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #sidebar"></a>
+                <a class="uk-navbar-item uk-logo" href="#">Dashboard</a>
+            </div>
+        </nav>
 
-    <!-- Il pannello Off-canvas che appare da sinistra su schermi piccoli -->
-    <div id="offcanvas-nav" uk-offcanvas="overlay: true">
-        <div class="uk-offcanvas-bar">
-            <h3>Menu</h3>
-            <ul class="uk-nav uk-nav-default">
-                <li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Dashboard</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Utenti</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: bag"></span> Prodotti</a></li>
-            </ul>
-        </div>
-    </div>
+        <!-- Sidebar a scomparsa con comandi di navigazione -->
+        <div id="sidebar" uk-offcanvas="mode: push; overlay: true">
+            <div class="uk-offcanvas-bar">
+                <!-- Bottone di chiusura sidebar -->
+                <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-    <!-- Griglia principale per il layout -->
-    <div class="uk-grid-match uk-grid-collapse" uk-grid>
+                <!-- Contenuto della sidebar -->
+                <h3 class="uk-nav-header uk-margin-medium-bottom">Gestione</h3>
+
+                <ul class="uk-nav uk-nav-default" uk-nav>
+                    <li class="uk-nav-header">Magazzino</li>
+                    <li>
+                        <a href="#products">
+                            <span class="uk-margin-small-right" uk-icon="icon: cart"></span> 
+                            Prodotti
+                        </a>
+                    </li>
+                    
+                    <li class="uk-nav-header">Anagrafica</li>
+                    <li>
+                        <a href="#users">
+                            <span class="uk-margin-small-right" uk-icon="icon: users"></span> 
+                            Utenti
+                        </a>
+                    </li>
         
-        <!-- Colonna Sidebar: visibile solo su schermi medi e grandi (breakpoint 'm') -->
-        <div class="uk-width-1-5@m uk-visible@m uk-background-muted uk-padding">
-            <h3 class="uk-heading-bullet">La Mia App</h3>
-            <ul class="uk-nav uk-nav-default">
-                <li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Dashboard</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Utenti</a></li>
-                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: bag"></span> Prodotti</a></li>
-            </ul>
-        </div>
+                    <li class="uk-nav-header">Amministrazione</li>
+                    <li>
+                        <a href="#orders">
+                            <span class="uk-margin-small-right" uk-icon="icon: cart"></span> 
+                            Ordini
+                        </a>
+                    </li>
 
-        <!-- Colonna Contenuto Principale: occupa lo spazio rimanente -->
-        <div class="uk-width-expand@m">
-            <div class="uk-padding">
-                <article class="uk-article">
-                    <h1 class="uk-article-title">Hello World</h1>
-                    <p class="uk-text-lead">My first website with <strong>UIkit</strong>!</p>
-                </article>
-                
-                <div class="uk-margin-top">
-                    <!-- Ecco il link che volevi conservare, con lo stile di un pulsante UIkit -->
-                    <a href="/api/prova" class="uk-button uk-button-primary">
-                        Test API
-                    </a>
-                </div>
+                    <li class="uk-nav-divider"></li>
+
+                    <li>
+                        <a href="#settings">
+                            <span class="uk-margin-small-right" uk-icon="icon: settings"></span> 
+                            Impostazioni
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 
-    </div>
+        <main class="uk-section">
+            <div class="uk-container uk-container-expand">
+                <div id="app-viewport">
+                    <!-- qui vengono iniettati i componenti della SPA -->
+                </div>
+            </div>
+        </main>
 
-    <!-- Includiamo gli script JS di UIkit (core e icone) -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.19.2/dist/js/uikit-icons.min.js"></script>
-</body>
+        <script type="module" src="js/main.js"></script>
+
+    </body>
 </html>
-USE root_db;
-DROP DATABASE root_db;
-CREATE DATABASE root_db;
-USE root_db;

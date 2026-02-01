@@ -1,0 +1,11 @@
+/ (Root del progetto)
+├── index.html            <-- Pulito, contiene solo HTML
+├── css/
+├── templates/
+├── controllers/
+└── js/                   <-- Tutto il JS è qui dentro
+    ├── main.js           <-- Lo studente lavora QUI
+    └── core/             <-- La libreria (non si tocca)
+        ├── App.js
+        ├── Router.js
+        └── ResourceLoader.js

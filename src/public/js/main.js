@@ -1,18 +1,26 @@
-import { apiRequest } from './api_client.js';
-import { loadTemplate } from './view_loader.js';
+// main.js
+import { App } from './core/App.js';
 
-async function renderPage(pageName) {
-    // 1. Prendi i dati dal backend PHP
-    const dati = await apiRequest(`${pageName}.php`);
+// definizione mapping rotte 
+// indica al router quale controller deve gestire quale fragment
+// e in quale viewport deve inserire i contenuti (se omesso si usa il default)
+const myRoutes = {
+    // '<fragment>' : { controller: '<controller>' [, viewport: '<viewport>'] }
+    'home':     { controller: 'home' },
+    //'products': { controller: 'products' },
+    'login':    { controller: 'auth' },
+    
+    // Esempio con viewport non default
+    //'cart':     { controller: 'cart', viewport: 'sidebar' }
+};
 
-    // 2. Prendi il template HTML statico
-    let template = await loadTemplate(pageName);
+// parametri globali
+const myConfig = {
+    apiBase: 'api', // url base del webservice che fornisce i dati json
+    defaultRoute: 'home', 
+    defaultViewportId: 'app-viewport' // viewport di default usato se omesso nel mapping delle rotte
+};
 
-    // 3. Uniscili (Esempio super semplice di replace)
-    for (let key in dati) {
-        template = template.replace(`{{${key}}}`, dati[key]);
-    }
-
-    // 4. Inietta nel DOM
-    document.getElementById('app').innerHTML = template;
-}
+// instanzia l'app con la configurazione scelta e la avvia
+const app = new App(myConfig, myRoutes);
+app.start();
